@@ -4,6 +4,6 @@ import tpl from './input';
 
 Handlebars.registerPartial('input', tpl);
 
-export default(type, placeholder, value) => {
-  return Handlebars.compile(tpl())({type, placeholder, value});
+export default(type, placeholder, name, value) => {
+  return Handlebars.compile(tpl())({type, placeholder, name, value});
 }

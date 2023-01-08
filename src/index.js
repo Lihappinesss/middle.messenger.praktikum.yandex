@@ -20,24 +20,20 @@ import error from './components/Error';
 import data from './data/chats.json';
 import messages from './data/messages.json';
 
+import './index.sass';
+
 import avatar from './images/avatar.jpg'
 
 
 function mainPage() {
-  return mainTpl({
-    signin: signin({
-      login: input('text', 'Логин'),
-      pass: input('password', 'Пароль'),
-      button: button('submit', 'Авторизоваться'),
-    }),
-  });
+  return mainTpl();
 }
 
 function signinPage() {
   return signinTpl({
     signin: signin({
-      login: input('text', 'Логин'),
-      pass: input('password', 'Пароль'),
+      login: input('text', 'Логин', 'login'),
+      pass: input('password', 'Пароль', 'password'),
       button: button('submit', 'Авторизоваться'),
     }),
   });
@@ -46,12 +42,12 @@ function signinPage() {
 function signupPage() {
   return signupTpl({
     signup: signup({
-      email: input('email', 'Почта'),
-      login: input('text', 'Логин'),
-      name: input('text', 'Имя'),
-      sername: input('text', 'Фамилия'),
-      tel: input('tel', 'Телефон'),
-      pass: input('password', 'Пароль'),
+      email: input('email', 'Почта', 'email'),
+      login: input('text', 'Логин', 'login'),
+      name: input('text', 'Имя', 'first_name'),
+      sername: input('text', 'Фамилия', 'second_name'),
+      tel: input('tel', 'Телефон', 'phone'),
+      pass: input('password', 'Пароль', 'password'),
       button: button('submit', 'Зарегистрироваться'),
     }),
   })
@@ -60,14 +56,14 @@ function signupPage() {
 function profilePage() {
   return profileTpl({
     profile: profile({
-      name: input('name', '','name'),
+      name: input('name', '', 'first_name', 'name'),
       avatar,
       nameProfile: 'name',
-      email: input('email', '', 'email'),
-      login: input('text', '', 'login'),
-      sername: input('text', '', 'sername'),
-      tel: input('tel', '', '8927'),
-      pass: input('password', '', 'password'),
+      email: input('email', '', 'email', 'email'),
+      login: input('text', '', 'login', 'login'),
+      sername: input('text', '', 'second_name', 'sername'),
+      tel: input('tel', '', 'phone', '8927'),
+      pass: input('password', '', 'password', 'password'),
       changeData: button('submit', 'Сохранить'),
       exit: button('button', 'Выйти'),
     }),
@@ -96,7 +92,7 @@ function chatPage() {
       users: data,
       messages,
       companion: 'Павел',
-      inputField: input('text', 'Сообщение'),
+      inputField: input('text', 'Сообщение', 'message'),
     })
   })
 }

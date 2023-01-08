@@ -1,18 +1,17 @@
-.table
-  border-collapse: collapse
-  table-layout: fixed
+.wrapper
   flex: 1 1 auto
-  width: 40%
+  width: 50%
+  background: var(--color-white)
+  padding: 15px
+  border-radius: 20px
   margin: 100px auto 0
 
-td
-  padding: 10px 0
-  font-size: 18px
-  line-height: 1.8rem
-  color: #808284
-
 .profileImg
-  border-bottom: 1px solid #eaeaea
+  display: flex
+  justify-content: space-around
+  align-items: center
+  padding-bottom: 20px
+  border-bottom: 1px solid var(--color-gray)
 
 .avatar
   position: relative
@@ -23,7 +22,16 @@ td
   width: 130px
   height: 130px
   border-radius: 50%
-  background: #eee
+  background: var(--color-light)
+
+.columns
+  display: flex
+  justify-content: space-around
+
+.left
+  margin-top: 20px
+  div
+    margin-bottom: 26px
 
 .upload
   position: absolute
@@ -42,10 +50,13 @@ td
   line-height: 16px
   margin: 20px 0 60px
 
-input
-  align-self: stretch
-
 .img
   width: 40px
   height: 40px
 
+.btn
+  width: 60%
+  margin: 30px auto 0
+
+.change
+  margin-bottom: 10px

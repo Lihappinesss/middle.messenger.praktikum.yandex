@@ -1,5 +1,7 @@
 import Handlebars from 'handlebars';
 
+import getDate from '../../utils/getDate';
+
 import clip from '../../images/clip.svg'
 import arrow from '../../images/rightArrow.svg';
 import more from '../../images/more.svg';
@@ -8,7 +10,7 @@ import styles from './index.module.sass';
 
 
 Handlebars.registerHelper('getDate', function(date) {
-  return new Date(date).toISOString().split('T')[0]
+  return getDate(date);
 });
 
 const chat = () => {
@@ -49,17 +51,22 @@ const chat = () => {
           </div>
           <div class=${styles.history}>
           {{#each messages}}
-            <div class=${styles.messageTime}>{{getDate time}}</div>
             <div class=${styles.message}>
+              <div class=${styles.messageTime}>{{getDate time}}</div>
               {{text}}
             </div>
           {{/each}}
           </div>
           <div class=${styles.send}>
-            <button type='button' class=${styles.clipBtn}>
+            <button type="button" class=${styles.clipBtn}>
               <img src=${clip} class=${styles.clip} />
             </button>
-            {{{inputField}}}
+            <input
+              type="text"
+              placeholder="Сообщение"
+              name="message"
+              class=${styles.text}
+            />
             <button class=${styles.sendBtn}>
               <img src=${arrow} class=${styles.arrow} width='20px' height='10px' />
             </button>

@@ -1,7 +1,7 @@
 const notFound = () => {
   return (
     `
-     {{{error}}}
+      {{{error}}}
     `
   );
 }
