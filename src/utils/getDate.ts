@@ -1,6 +1,6 @@
-const months = ['Января','Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 
-function getDate(date) {
+function getDate(date: string): string {
   const messageDate = new Date(date);
   const now = new Date();
   const messageMount = months[messageDate.getMonth()];

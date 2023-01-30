@@ -1,0 +1,59 @@
+{
+  "extends": ["eslint-config-airbnb-base"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "no-param-reassign": "off",
+    "dot-notation": "off",
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "arrow-body-style": "off",
+    "@typescript-eslint/lines-between-class-members": [
+      "error",
+      "always",
+      { "exceptAfterSingleLine": true }
+    ],
+    "no-console": "off",
+    "quotes": ["error", "single"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never"
+      }
+    ],
+    "@typescript-eslint/indent": "off",
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": ["ConditionalExpression"]
+      }
+    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
+  },
+  "settings": {
+    "import/extensions": [".ts"],
+    "import/parsers": {
+        "@typescript-eslint/parser": [".ts"]
+    },
+    "import/resolver": {
+        "node": {
+            "extensions": [".ts"]
+        }
+    }
+  }
+}
+
+  
