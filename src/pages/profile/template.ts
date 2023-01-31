@@ -16,6 +16,7 @@ const template = `
         <div>Имя</div>
         <div>Фамилия</div>
         <div>Телефон</div>
+        <div>Имя в чате</div>
         <div>Пароль</div>
       </div>
       <div>
@@ -23,6 +24,7 @@ const template = `
         <div>{{{name}}}</div>
         <div>{{{sername}}}</div>
         <div>{{{tel}}}</div>
+        <div>{{{displayName}}}</div>
         <div>{{{pass}}}</div>
       </div>
     </div>

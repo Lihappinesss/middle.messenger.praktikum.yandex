@@ -15,7 +15,7 @@ class Error extends Block {
   render(): DocumentFragment {
     return this.compile(
       `
-        <div class=${styles.error}>{{err}}</div>
+        <h1 class=${styles.error}>{{err}}</h1>
         <div class=${styles.text}>{{text}}</div>
         <a class=${styles.link} href='/chat'>Назад к чатам</a>
       `,

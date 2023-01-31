@@ -83,7 +83,7 @@ const validateLogin = (login: string, elem?: HTMLElement): boolean => {
 const validateName = (name: string, elem?: HTMLElement): boolean => {
   let valid = false;
   if (!isRequired(name)) {
-    showError(elem, 'Введите логин');
+    showError(elem, 'Введите имя');
   } else if (!isBetween(name.length, 3, 20)) {
     showError(elem, 'Логин от 3 до 20 символов');
   } else {
@@ -143,6 +143,9 @@ const validateForm = (value: string, name: string, elem?: HTMLElement) => {
       break;
     case 'message':
       isValid = validateMessage(name, elem);
+      break;
+    case 'display_name':
+      isValid = validateName(name, elem);
       break;
     default:
       return isValid;

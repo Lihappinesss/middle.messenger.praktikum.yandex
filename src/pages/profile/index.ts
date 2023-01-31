@@ -78,6 +78,17 @@ class Profile extends Block {
         ) => validateForm(element.value, element.name, element),
     });
 
+    const displayName = new Input({
+      type: 'text',
+      placeholder: 'Имя в чате',
+      name: 'display_name',
+      onInput: (value) => console.log(value),
+      onValidate:
+        (
+          element: HTMLInputElement | null,
+        ) => validateForm(element.value, element.name, element),
+    });
+
     const changeData = new Button({
       attr: {
         type: 'submit',
@@ -104,6 +115,7 @@ class Profile extends Block {
       avatar,
       nameProfile,
       exit,
+      displayName,
     });
   }
 
