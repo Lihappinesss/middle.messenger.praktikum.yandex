@@ -6,27 +6,27 @@ const template = `
     <h1 class='title'>Регистрация</h1>
     <form class='form'>
       <div class='input'>
-        {{{email}}}
+        {{{Email}}}
       </div>
       <div class='input'>
-        {{{login}}}
+        {{{Login}}}
       </div>
       <div class='input'>
-        {{{name}}}
+        {{{Name}}}
       </div>
       <div class='input'>
-        {{{sername}}}
+        {{{Sername}}}
       </div>
       <div class='input'>
-        {{{tel}}}
+        {{{Tel}}}
       </div>
       <div class='input'>
-        {{{pass}}}
+        {{{Pass}}}
       </div>
       <div class=${styles.btn}>
-        {{{button}}}
+        {{{ButtonSubmit}}}
       </div>
-      <a href='/signin' class='link'>Войти</a>
+      {{{Signin}}}
     </form>
   </div>
 `;

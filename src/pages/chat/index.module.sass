@@ -4,96 +4,47 @@
   overflow: hidden
 
 .sidebar
-  flex: 1
-  background: var(--color-light)
-  padding: 20px 10px 0
-  border-right: 1px solid var(--color-gray)
-
-.inputSearch
-  background: var(--color-gray)
-  border-radius: 5px
-  width: 100%
-  border: none
-  padding: 10px
-  color: var(--color-dark-gray)
-  margin-bottom: 15px
-
-.users
-  padding: 12px 0
-
-.contact
-  display: flex
-  border-top: 1px solid var(--color-gray)
-  padding: 10px 0
-  justify-content: space-around
-
-.avatar
-  border-radius: 50%
-  background: var(--color-gray)
-  width: 47px
-  height: 47px
-
-.userInfo
-  width: 150px
-
-.name
-  font-size: 18px
-  line-height: 18px
-  margin-bottom: 15px
-
-.lastMessage
-  -webkit-line-clamp: 1
-  display: -webkit-box
-  -webkit-box-orient: vertical
-  overflow: hidden
-  color: var(--color-dark-gray)
-
-.messageInfo
   display: flex
   flex-direction: column
-  justify-content: space-between
-  font-size: 11px
-  line-height: 12px
-  color: var(--color-dark-gray)
+  flex: 1
+  background: var(--color-light)
+  padding: 20px 10px 20px
+  border-right: 1px solid var(--color-gray)
 
-.time
-  margin-bottom: 15px
+.top
+  flex: 1
 
-.unread
+.newChat
+  margin-bottom: 20px
+
+.profileLink
   display: flex
-  justify-content: center
-  align-items: center
-  margin-left: auto
-  width: 20px
-  height: 20px
-  background-color: var(--color-primary)
-  border-radius: 50%
-  color: var(--color-white)
+  justify-content: flex-end
+  margin-bottom: 10px
+  text-decoration: none
+  color: var(--color-primary)
+
+.chats
+  padding: 12px 0
 
 .chat
   display: flex
   flex-direction: column
   flex: 3
-  padding: 20px 20px 10px
+  padding: 20px
 
 .shapka
   display: flex
-  align-items: center
-  padding-bottom: 15px
-  border-bottom: 1px solid var(--color-light)
   justify-content: space-between
+  border-bottom: 1px solid var(--color-light)
 
 .companion
   display: flex
   align-items: center
 
-.avatarComp
-  border-radius: 50%
-  width: 34px
-  height: 34px
-  background: var(--color-light)
-
-.nameComp
+.users
+  display: flex
+  align-items: center
   font-size: 15px
   line-height: 15px
   margin-left: 20px
@@ -105,6 +56,8 @@
   cursor: pointer
 
 .history
+  display: flex
+  flex-direction: column
   flex: 2
   padding-top: 20px
 
@@ -118,50 +71,41 @@
   margin-bottom: 10px
   border-radius: 10px
   max-width: 300px
+  min-width: 300px
 
 .send
   position: relative
   display: flex
   align-items: center
 
-.clip
-  margin-right: 15px
-
-.sendBtn
-  position: absolute
-  top: 15px
-  right: 20px
-  display: flex
-  justify-content: center
-  aling-items: center
-  width: 28px
-  height: 28px
-  border-radius: 50%
-  background: var(--color-primary)
-  margin-left: 15px
-  border: none
-  cursor: pointer
-  align-items: center
-
-.clipBtn
-  position: absolute
-  top: 15px
-  right: 50px
-  overflow: hidden
-  background: none
-  border: none
-  cursor: pointer
-
 .messageTime
   text-align: right
   margin-bottom: 10px
   color: var(--color-dark-gray)
 
-.text
+input
   width: 100%
-  border-radius: 10px
   padding: 20px
   font-size: 18px
   color: var(--color-primary)
   box-sizing: border-box
   border: none
+
+.field
+  margin-right: 20px
+  width: 100%
+
+.createChat
+  margin-top: 20px
+
+.users
+  padding: 12px 0
+
+.chat
+  display: flex
+  flex-direction: column
+  flex: 3
+  padding: 20px 20px 10px
+
+.owner
+  margin-left: auto

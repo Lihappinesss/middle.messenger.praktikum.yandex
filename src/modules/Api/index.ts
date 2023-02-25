@@ -26,6 +26,18 @@ function queryStringify(data: TData) {
 }
 
 class HTTPTransport {
+  static API_URL = 'https://ya-praktikum.tech/api/v2';
+
+  protected endpoint: string;
+
+  constructor(endpoint: string) {
+    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+  }
+
+  public getFullUrl() {
+    return this.endpoint;
+  }
+
   public get = (url: string, options = {}) => this.request(
     url,
     { ...options, method: METHODS.GET },
@@ -87,10 +99,14 @@ class HTTPTransport {
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
 
+      xhr.withCredentials = true;
+
+      xhr.responseType = 'json';
+
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(data as any);
       }
     });
   };

@@ -1,20 +1,19 @@
 import styles from './index.module.sass';
 
 const template = `
-  {{{nav}}}
   <div class='wrapper'>
     <h1 class='title'>Вход</h1>
     <form class='form'>
       <div class='input'>
-        {{{login}}}
+        {{{Login}}}
       </div>
       <div>
-        {{{pass}}}
+        {{{Pass}}}
       </div>
       <div class=${styles.btn}>
-        {{{button}}}
+        {{{ButtonSignin}}}
       </div>
-      <a href='/signup' class='link'>Нет аккаунта?</a>
+     {{{GoSinup}}}
     </form>
   </div>
 `;

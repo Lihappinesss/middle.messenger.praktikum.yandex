@@ -1,65 +1,107 @@
-import clip from '../../images/clip.svg';
-import arrow from '../../images/rightArrow.svg';
-import more from '../../images/more.svg';
+import Handlebars from 'handlebars';
+import { TProps } from '../../modules/Block';
+import { User } from '../../store/types';
+import getDate from '../../utils/getDate';
 
 import styles from './index.module.sass';
 
-const template = `
-  <div class=${styles.sidebar}>
-    <input
-      type='search'
-      placeholder='Поиск'
-      class=${styles.inputSearch}
-    />
-    <div class=${styles.users}>
-      {{#each users}}
-        <div class=${styles.contact}>
-          <div class=${styles.avatar}></div>
-          <div class=${styles.userInfo}>
-            <div class=${styles.name}>{{last_message.user.first_name}}</div>
-            <div class=${styles.lastMessage}>{{last_message.content}}</div>
-          </div>
-          <div class=${styles.messageInfo}>
-            <div class=${styles.time}>{{getDate last_message.time}}</div>
-            <div class=${styles.unread}>{{unread_count}}</div>
+Handlebars.registerHelper('getDate', (date) => {
+  return getDate(date);
+});
+
+const template = (props: TProps) => {
+  Handlebars.registerHelper('getLogin', (id: number) => {
+    const messageUser = props.chatUsers.find((user: User) => user.id === id);
+    return messageUser.login;
+  });
+
+  Handlebars.registerHelper('checkId', (value) => {
+    return value === props.user.id;
+  });
+
+  Handlebars.registerHelper('showUserAffect', () => {
+    if (props.showUserAffect) {
+      return true;
+    }
+    return false;
+  });
+
+  Handlebars.registerHelper('showSearchUser', () => {
+    if (props.showSearchUser) {
+      return true;
+    }
+    return false;
+  });
+
+  const content = (
+    `
+      <div>{{getLogin user_id}}</div>
+      <div class=${styles.messageTime}>{{getDate time}}</div>
+      {{content}}
+    `
+  );
+
+  return `
+    <div class=${styles.wrapper}>
+      <div class=${styles.sidebar}>
+        <div class=${styles.top}>
+          {{{GoProfileBtn}}}
+
+          {{{SearchChat}}}
+
+          <div class=${styles.chats}>
+            {{{ChatsCard}}}
           </div>
         </div>
-      {{/each}}
-    </div>
-  </div>
-  <div class=${styles.chat}>
-    <div class=${styles.shapka}>
-      <div class=${styles.companion}>
-        <img src='' class=${styles.avatarComp} />
-        <div class=${styles.nameComp}>{{companion}}</div>
+
+        <div>
+          <div class=${styles.newChat}>{{{NewChatInput}}}</div>
+          {{{CreateNewChatBtn}}}
+        </div>
       </div>
-      <button class=${styles.moreBtn}>
-        <img src=${more} alt="more" />
-      </button>
-    </div>
-    <div class=${styles.history}>
-    {{#each messages}}
-      <div class=${styles.message}>
-        <div class=${styles.messageTime}>{{getDate time}}</div>
-        {{text}}
+
+      <div class=${styles.chat}>
+        <div class=${styles.shapka}>
+          <div class=${styles.companion}>
+            <div class=${styles.users}>
+              {{#each chatUsers}}
+                {{login}}
+              {{/each}}
+            </div>
+          </div>
+          {{{MoreBtn}}}
+        </div>
+
+        <div class=${styles.history}>
+          {{#if (showUserAffect) }}
+            {{{UserAffectList}}}
+          {{/if}}
+
+          {{#if (showSearchUser) }}
+            {{{PopupChat}}}
+          {{/if}}
+
+          {{#each messages}}
+            {{#if (checkId user_id)}}
+              <div class=${styles.owner}>
+                <div class=${styles.message}>
+                  ${content}
+                </div>
+              </div>
+            {{else}}
+              <div class=${styles.message}>
+                ${content}
+              </div>
+            {{/if}}
+          {{/each}}
+        </div>
+
+        <div class=${styles.send}>
+        {{{Send}}}
+        </div>
       </div>
-    {{/each}}
     </div>
-    <div class=${styles.send}>
-      <button type="button" class=${styles.clipBtn}>
-        <img src=${clip} class=${styles.clip} />
-      </button>
-      <input
-        type="text"
-        placeholder="Сообщение"
-        name="message"
-        class=${styles.text}
-      />
-      <button class=${styles.sendBtn}>
-        <img src=${arrow} class=${styles.arrow} width='20px' height='10px' />
-      </button>
-    </div>
-  </div>
-  `;
+    `;
+};
 
 export default template;

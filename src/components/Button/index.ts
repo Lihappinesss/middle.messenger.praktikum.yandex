@@ -8,7 +8,7 @@ class Button extends Block {
   constructor(props: Ibutton) {
     super('button', {
       ...props,
-      className: styles.btn,
+      className: props.type ? styles.ghost : styles.btn,
       events: {
         click: props.onClick,
         blur: props.onBlur,
@@ -17,8 +17,12 @@ class Button extends Block {
   }
 
   render(): DocumentFragment {
+    const content = this.props.icon
+    ? `<img src=${this.props.icon} />`
+    : '{{text}}';
+
     return this.compile(
-      '{{text}}',
+      content,
       this.props,
     );
   }

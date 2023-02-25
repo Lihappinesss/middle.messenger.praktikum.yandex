@@ -1,129 +1,176 @@
-import Block from '../../modules/Block';
+import Block, { TProps } from '../../modules/Block';
+
+import userController from '../../controllers/UserController';
+import authController from '../../controllers/Auth';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import Avatar from '../../components/Avatar';
 
 import validateForm from '../../utils/validateForm';
-
-import avatar from '../../images/avatar.jpg';
+import connect from '../../hoc/connect';
 
 import template from './template';
+import { TStore } from '../../store/types';
+import router from '../../modules/Router';
 
 class Profile extends Block {
-  constructor(props: Record<string, any> = {}) {
-    const nameProfile = 'name';
-    const email = new Input({
+  constructor(tag: string, props: TProps) {
+    const { user = {} } = props || {};
+    const nameProfile = user?.first_name;
+
+    const handleSubmit = (e: MouseEvent) => {
+      e.preventDefault();
+      const inputs = document.querySelectorAll('input');
+      const formData = Array.from(inputs).reduce((acc: any, field: HTMLInputElement) => {
+        acc[field.name] = field.value;
+        return acc;
+      }, {});
+
+      userController.updateProfile(formData);
+    };
+
+    const Email = new Input({
       type: 'email',
       placeholder: 'Почта',
       name: 'email',
-      onInput: (value) => console.log(value),
+      value: user?.email,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const login = new Input({
+    const Login = new Input({
       type: 'text',
       placeholder: 'Логин',
       name: 'login',
-      onInput: (value) => console.log(value),
+      value: user?.login,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const name = new Input({
+    const Name = new Input({
       type: 'text',
       placeholder: 'Имя',
       name: 'first_name',
-      onInput: (value) => console.log(value),
+      value: user?.first_name,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const sername = new Input({
+    const Sername = new Input({
       type: 'text',
       placeholder: 'Фамилия',
       name: 'second_name',
-      onInput: (value) => console.log(value),
+      value: user?.second_name,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const tel = new Input({
+    const Tel = new Input({
       type: 'tel',
       placeholder: 'Телефон',
       name: 'phone',
-      onInput: (value) => console.log(value),
+      value: user?.phone,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const pass = new Input({
+    const Pass = new Input({
       type: 'password',
       placeholder: 'Пароль',
       name: 'password',
-      onInput: (value) => console.log(value),
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const displayName = new Input({
+    const DisplayName = new Input({
       type: 'text',
       placeholder: 'Имя в чате',
       name: 'display_name',
-      onInput: (value) => console.log(value),
+      value: user?.display_name,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const changeData = new Button({
+    const Ava = new Avatar({
+      ...props,
+      onInput: (file: File) => {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        userController.updateAvatar(formData);
+      },
+    });
+
+    const ChangeData = new Button({
       attr: {
         type: 'submit',
       },
       text: 'Сохранить',
+      onClick: (event) => handleSubmit(event),
     });
 
-    const exit = new Button({
+    const Exit = new Button({
       attr: {
         type: 'button',
       },
       text: 'Выйти',
+      onClick: () => {
+        authController.logout();
+      },
     });
 
-    super('form', {
+    const GoChatBtn = new Button({
+      attr: {
+        type: 'button',
+      },
+      text: 'К чатам',
+      onClick: () => {
+        router.go('/');
+      },
+    });
+
+    super('div', {
       ...props,
-      changeData,
-      login,
-      pass,
-      email,
-      name,
-      sername,
-      tel,
-      avatar,
+      ChangeData,
+      Login,
+      Pass,
+      Email,
+      Name,
+      Sername,
+      Tel,
+      Ava,
       nameProfile,
-      exit,
-      displayName,
+      Exit,
+      DisplayName,
+      GoChatBtn,
     });
   }
 
   render(): DocumentFragment {
     return (
-      this.compile(template)
+      this.compile(template, this.props)
     );
   }
 }
 
-export default Profile;
+function mapUserToProps(state: TStore) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(Profile, mapUserToProps);

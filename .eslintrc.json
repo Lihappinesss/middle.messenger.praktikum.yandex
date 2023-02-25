@@ -41,7 +41,9 @@
       }
     ],
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error"
+    "@typescript-eslint/no-unused-vars": "error",
+    "no-constructor-return": "off",
+    "no-use-before-define": "off"
   },
   "settings": {
     "import/extensions": [".ts"],

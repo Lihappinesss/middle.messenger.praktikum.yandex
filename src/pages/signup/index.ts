@@ -1,24 +1,26 @@
 import Block from '../../modules/Block';
 
+import authController from '../../controllers/Auth';
+
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import Navigation from '../../components/Navigation';
 
 import validateForm from '../../utils/validateForm';
-import debounce from '../../utils/debounce';
 
 import template from './template';
+import router from '../../modules/Router';
 
 class SignUp extends Block {
-  constructor(props: Record<string, any> = {}) {
+  constructor(tag, props: Record<string, any> = {}) {
     const handleSubmit = (e: MouseEvent) => {
       e.preventDefault();
-      const form = document.querySelector('form');
-      const fields = Array.from(form).filter((el) => el.nodeName === 'input');
-      const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
+      const inputs = document.querySelectorAll('input');
+      const formData = Array.from(inputs).reduce((acc: any, field: HTMLInputElement) => {
         acc[field.name] = field.value;
         return acc;
       }, {});
+
+      console.log(formData);
 
       const isEmailValid = validateForm(formData.email, 'email');
       const isPasswordValid = validateForm(formData.password, 'password');
@@ -28,90 +30,78 @@ class SignUp extends Block {
       const isPhoneValid = validateForm(formData.phone, 'phone');
 
       const isValidField = isEmailValid
-      && isPasswordValid
-      && isLoginValid
-      && isFirstValid
-      && isSecondValid
-      && isPhoneValid;
+        && isPasswordValid
+        && isLoginValid
+        && isFirstValid
+        && isSecondValid
+        && isPhoneValid;
 
       if (isValidField) {
-        console.log(formData);
+        authController.signUp(formData);
       }
     };
 
-    const email = new Input({
+    const Email = new Input({
       type: 'email',
       placeholder: 'Почта',
       name: 'email',
-      debounce,
-      onInput: (value) => console.log(value),
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const login = new Input({
+    const Login = new Input({
       type: 'text',
       placeholder: 'Логин',
       name: 'login',
-      onInput: (value) => console.log(value),
-      debounce,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const name = new Input({
+    const Name = new Input({
       type: 'text',
       placeholder: 'Имя',
       name: 'first_name',
-      debounce,
-      onInput: (value) => console.log(value),
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const sername = new Input({
+    const Sername = new Input({
       type: 'text',
       placeholder: 'Фамилия',
       name: 'second_name',
-      debounce,
-      onInput: (value) => console.log(value),
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const tel = new Input({
+    const Tel = new Input({
       type: 'tel',
       placeholder: 'Телефон',
       name: 'phone',
-      debounce,
-      onInput: (value) => console.log(value),
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const pass = new Input({
+    const Pass = new Input({
       type: 'password',
       placeholder: 'Пароль',
       name: 'password',
-      debounce,
-      onInput: (value) => console.log(value),
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const button = new Button({
+    const ButtonSubmit = new Button({
       attr: {
         type: 'submit',
       },
@@ -121,18 +111,27 @@ class SignUp extends Block {
       },
     });
 
-    const nav = new Navigation();
+    const Signin = new Button({
+      attr: {
+        type: 'submit',
+      },
+      text: 'Войти',
+      onClick: (e) => {
+        e.preventDefault();
+        router.go('/signin');
+      },
+    });
 
     super('div', {
       ...props,
-      button,
-      login,
-      pass,
-      email,
-      name,
-      sername,
-      tel,
-      nav,
+      ButtonSubmit,
+      Login,
+      Pass,
+      Email,
+      Name,
+      Sername,
+      Tel,
+      Signin,
     });
   }
 

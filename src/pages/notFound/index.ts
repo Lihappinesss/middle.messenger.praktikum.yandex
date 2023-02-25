@@ -3,15 +3,15 @@ import Block from '../../modules/Block';
 import Error from '../../components/Error';
 
 class NotFound extends Block {
-  constructor(props: Record<string, any> = {}) {
-    const error = new Error({
+  constructor(tag, props: Record<string, any> = {}) {
+    const ErrorPage = new Error({
       err: '404',
       text: 'Не туда попали',
     });
 
     super('div', {
       ...props,
-      error,
+      ErrorPage,
     });
   }
 
@@ -19,7 +19,7 @@ class NotFound extends Block {
     return (
       this.compile(
         `
-          {{{error}}}
+          {{{ErrorPage}}}
         `,
       )
     );
