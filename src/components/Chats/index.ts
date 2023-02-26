@@ -31,12 +31,13 @@ class Chats extends Block {
   }
 
   render(): DocumentFragment {
+    console.log(this.props.chats);
     return this.compile(
       `
         {{#each chats}}
           <li data-chatid={{id}}>
             <div class=${styles.contact}>
-              <img class=${styles.avatar} src='https://ya-praktikum.tech/api/v2/resources/{{last_message.user.avatar}}' />
+              <img class=${styles.avatar} src='https://ya-praktikum.tech/api/v2/resources/{{avatar}}' />
               <div class=${styles.userInfo}>
                 <div class=${styles.title}>{{title}}</div>
                 <div class=${styles.lastMessage}>{{last_message.content}}</div>

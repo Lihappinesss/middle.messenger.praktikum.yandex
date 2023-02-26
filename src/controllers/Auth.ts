@@ -21,7 +21,7 @@ class AuthController {
           store.dispatch(getUser(data));
         });
     } catch (e) {
-      router.go('/signin');
+      console.log(e);
     }
   }
 
@@ -29,7 +29,7 @@ class AuthController {
     try {
       await this.api.signUp(user)
         .then(() => {
-          router.go('/');
+          router.go('/messenger');
         });
     } catch (e) {
       console.log(e);
@@ -40,7 +40,7 @@ class AuthController {
     try {
       await this.api.signIn(user)
         .then(() => {
-          router.go('/');
+          router.go('/messenger');
         });
     } catch (e) {
       console.log(e);
@@ -51,7 +51,7 @@ class AuthController {
     try {
       await this.api.signOut()
         .then(() => {
-          router.go('/signin');
+          router.go('/');
           store.dispatch(deleteUser());
         });
     } catch (e) {

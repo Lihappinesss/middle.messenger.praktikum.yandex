@@ -7,7 +7,7 @@ import debounce from '../../utils/debounce';
 
 export type TProps = Record<string, any>;
 
-class Block {
+abstract class Block <Props extends Record<string, any> = unknown> {
   private _meta: {
     tagName: string,
     props: TProps
@@ -34,7 +34,7 @@ class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  constructor(tagName: string = 'div', propsAndChildren: TProps = {}) {
+  constructor(tagName: string, propsAndChildren: Props) {
     const { children, props } = this._getChildren(propsAndChildren);
 
     const eventBus = new EventBus();

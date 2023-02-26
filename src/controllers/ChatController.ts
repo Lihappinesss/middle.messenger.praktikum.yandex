@@ -1,9 +1,8 @@
 import ChatAPI from '../modules/Api/ChatApi';
-// import router from '../modules/Router';
+
 import store from '../store';
 import {
   setChats,
-  addChat,
   setToken,
   setChatUsers,
 } from '../store/actions';
@@ -20,8 +19,7 @@ class ChatController {
   async create(data: ChatTitle) {
     try {
       await this.api.create(data)
-        .then((chat) => {
-          store.dispatch(addChat(chat.id));
+        .then(() => {
           console.log('чат создан');
         });
     } catch (e) {

@@ -52,7 +52,7 @@ class Signin extends Block {
       type: 'ghost',
       onClick: (e) => {
         e.preventDefault();
-        router.go('/signup');
+        router.go('/sign-up');
       },
     });
 

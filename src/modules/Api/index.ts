@@ -16,6 +16,11 @@ type TOptions = {
   data?: unknown
 };
 
+type HTTPMethod = (url: string, options?: TOptions) => Promise<unknown>
+
+// TODO queryStringify сразу в методе get вызывать,
+// чтобы не проверять METHODS.GET при каждом запросе
+
 function queryStringify(data: TData) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
@@ -38,27 +43,27 @@ class HTTPTransport {
     return this.endpoint;
   }
 
-  public get = (url: string, options = {}) => this.request(
+  public get: HTTPMethod = (url, options) => this.request(
     url,
     { ...options, method: METHODS.GET },
   );
 
-  public post = (url: string, options = {}) => this.request(
+  public post: HTTPMethod = (url, options) => this.request(
     url,
     { ...options, method: METHODS.POST },
   );
 
-  public put = (url: string, options = {}) => this.request(
+  public put: HTTPMethod = (url, options) => this.request(
     url,
     { ...options, method: METHODS.PUT },
   );
 
-  public patch = (url: string, options = {}) => this.request(
+  public patch:HTTPMethod = (url, options) => this.request(
     url,
     { ...options, method: METHODS.PATCH },
   );
 
-  public delete = (url: string, options = {}) => this.request(
+  public delete:HTTPMethod = (url, options) => this.request(
     url,
     { ...options, method: METHODS.DELETE },
   );

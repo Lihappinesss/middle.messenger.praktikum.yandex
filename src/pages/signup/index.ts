@@ -20,8 +20,6 @@ class SignUp extends Block {
         return acc;
       }, {});
 
-      console.log(formData);
-
       const isEmailValid = validateForm(formData.email, 'email');
       const isPasswordValid = validateForm(formData.password, 'password');
       const isLoginValid = validateForm(formData.login, 'login');
@@ -118,7 +116,7 @@ class SignUp extends Block {
       text: 'Войти',
       onClick: (e) => {
         e.preventDefault();
-        router.go('/signin');
+        router.go('/');
       },
     });
 

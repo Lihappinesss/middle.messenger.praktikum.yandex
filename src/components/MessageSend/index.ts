@@ -26,7 +26,7 @@ class MessageSend extends Block {
         type: 'button',
       },
       onClick: (e: Event) => {
-        this.handleSubmit(e);
+        this.props.onMessageSend(e);
       },
     });
 
@@ -36,24 +36,6 @@ class MessageSend extends Block {
       SendBtn,
       className: styles.form,
     });
-  }
-
-  handleSubmit(e: Event) {
-    e.preventDefault();
-
-    const form = (e.target as HTMLElement).closest('form');
-
-    const fields = Array.from(form).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
-
-    if (!formData.message) {
-      return;
-    }
-
-    this.props.onMessageSend(formData);
   }
 
   render(): DocumentFragment {

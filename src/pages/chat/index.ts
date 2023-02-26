@@ -47,7 +47,7 @@ class Chat extends Block {
       onClick: () => {
         chatController.create({
           title: chatName,
-        });
+        }).then(() => this.requestChatList());
       },
     });
 
@@ -70,8 +70,13 @@ class Chat extends Block {
     });
 
     const Send = new MessageSend('form', {
-      onMessageSend: ({ message }) => {
-        messageController.sendMessage(message);
+      onMessageSend: (e: Event) => {
+        this.handleSend(e);
+      },
+      events: {
+        submit: (e: Event) => {
+          this.handleSend(e);
+        },
       },
     });
 
@@ -140,7 +145,7 @@ class Chat extends Block {
       },
       type: 'ghost',
       onClick: () => {
-        router.go('/profile');
+        router.go('/settings');
       },
     });
 
@@ -186,6 +191,24 @@ class Chat extends Block {
 
   requestChatUsers() {
     chatController.requestChatUsers(this.props.chatId);
+  }
+
+  handleSend(e: Event) {
+    e.preventDefault();
+
+    const form = (e.target as HTMLElement).closest('form');
+
+    const fields = Array.from(form).filter((el) => el.nodeName === 'INPUT');
+    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
+      acc[field.name] = field.value;
+      return acc;
+    }, {});
+
+    if (!formData.message) {
+      return;
+    }
+
+    messageController.sendMessage(formData.message);
   }
 
   componentDidMount() {

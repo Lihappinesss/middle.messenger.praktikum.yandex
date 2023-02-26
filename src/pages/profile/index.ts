@@ -139,7 +139,7 @@ class Profile extends Block {
       },
       text: 'К чатам',
       onClick: () => {
-        router.go('/');
+        router.go('/messenger');
       },
     });
 
