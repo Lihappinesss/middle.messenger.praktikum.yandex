@@ -10,18 +10,25 @@ import styles from './index.module.sass';
 
 class Popup extends Block {
   constructor(tag: string, props: TProps) {
-    const SearchUser = new Input({
+    super(tag, {
+      ...props,
+      className: styles.popup,
+    });
+  }
+
+  init() {
+    this.children.SearchUser = new Input({
       type: 'text',
       placeholder: 'Поиск',
       name: 'search',
       onInput: (value) => this.props.onInput(value),
     });
 
-    const UserListPopup = new UserList('ul', {
-      ...props,
+    this.children.UserListPopup = new UserList('ul', {
+      ...this.props,
     });
 
-    const Close = new Button({
+    this.children.Close = new Button({
       icon: close,
       attr: {
         type: 'button',
@@ -30,14 +37,6 @@ class Popup extends Block {
       onClick: () => {
         this.props.closeSearch();
       },
-    });
-
-    super(tag, {
-      ...props,
-      SearchUser,
-      UserListPopup,
-      className: styles.popup,
-      Close,
     });
   }
 

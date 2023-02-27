@@ -8,6 +8,9 @@ import Signin from './pages/signin';
 import Signup from './pages/signup';
 import Profile from './pages/profile';
 import Chat from './pages/chat';
+import NotFound from './pages/notFound';
+
+import store from './store';
 
 // eslint-disable-next-line no-shadow
 enum RoutesPage {
@@ -23,7 +26,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(RoutesPage.SigninPage, Signin)
     .use(RoutesPage.SignupPage, Signup)
     .use(RoutesPage.ProfilePage, Profile)
-    .use(RoutesPage.ChatPage, Chat);
+    .use(RoutesPage.ChatPage, Chat)
+    .use(RoutesPage.NotFoundPage, NotFound);
 
   let isProtectedRoute = true;
 
@@ -38,14 +42,15 @@ window.addEventListener('DOMContentLoaded', async () => {
       isProtectedRoute = true;
   }
 
-  try {
-    await authController.fetchUser();
+  await authController.fetchUser();
+
+  if (store.getState().user) {
     router.start();
 
     if (!isProtectedRoute) {
       router.go(RoutesPage.ProfilePage);
     }
-  } catch (e) {
+  } else {
     router.start();
 
     if (isProtectedRoute) {

@@ -2,14 +2,24 @@ import Block from '../modules/Block';
 
 import store from '../store';
 
-export default function connect(Component: typeof Block, mapStateToProps) {
-  return class extends Component {
-    constructor(tag: string, props = {}) {
-      super(tag, { ...props, ...mapStateToProps(store.getState()) });
+export default function connect(mapStateToProps: (state: any) => any) {
+  return function wrap(Component: typeof Block) {
+    let previousState: any;
 
-      store.on('changed', () => {
-        this.setProps({ ...mapStateToProps(store.getState()) });
-      });
-    }
+    return class WithStore extends Component {
+      constructor(tag, props: any) {
+        previousState = mapStateToProps(store.getState());
+
+        super(tag, { ...props, ...previousState });
+
+        store.on('changed', () => {
+          const stateProps = mapStateToProps(store.getState());
+
+          previousState = stateProps;
+
+          this.setProps({ ...stateProps });
+        });
+      }
+    };
   };
 }

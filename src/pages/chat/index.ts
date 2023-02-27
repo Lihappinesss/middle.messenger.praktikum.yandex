@@ -26,20 +26,25 @@ import Popup from '../../components/Popup';
 import template from './template';
 
 import more from '../../images/more.svg';
-import { TStore } from '../../store/types';
 
-class Chat extends Block {
+class ChatPage extends Block {
   constructor(tag: string, props: Record<string, any> = {}) {
+    super('div', {
+      ...props,
+    });
+  }
+
+  init() {
     let chatName = '';
 
-    const NewChatInput = new Input({
+    this.children.NewChatInput = new Input({
       type: 'text',
       placeholder: 'Название чата',
       name: 'chatName',
       onInput: (value: string) => { chatName = value; },
     });
 
-    const CreateNewChatBtn = new Button({
+    this.children.CreateNewChatBtn = new Button({
       text: 'Создать чат',
       attr: {
         type: 'button',
@@ -51,7 +56,7 @@ class Chat extends Block {
       },
     });
 
-    const ChatsCard = new Chats('ul', {
+    this.children.ChatsCard = new Chats('ul', {
       onClick: (chatId: number) => {
         store.dispatch(setMessages([]));
         messageController.leave();
@@ -61,7 +66,7 @@ class Chat extends Block {
       },
     });
 
-    const SearchChat = new Input({
+    this.children.SearchChat = new Input({
       type: 'text',
       placeholder: 'Поиск',
       name: 'search',
@@ -69,7 +74,7 @@ class Chat extends Block {
       // onInput: (value) => console.log(value),
     });
 
-    const Send = new MessageSend('form', {
+    this.children.Send = new MessageSend('form', {
       onMessageSend: (e: Event) => {
         this.handleSend(e);
       },
@@ -80,8 +85,8 @@ class Chat extends Block {
       },
     });
 
-    const UserAffectList = new UserAffect('ul', {
-      ...props,
+    this.children.UserAffectList = new UserAffect('ul', {
+      ...this.props,
       addUser: () => {
         store.dispatch(setShowUserAffect(false));
         store.dispatch(setShowSearchUser(true));
@@ -103,8 +108,8 @@ class Chat extends Block {
       },
     });
 
-    const PopupChat = new Popup('div', {
-      ...props,
+    this.children.PopupChat = new Popup('div', {
+      ...this.props,
       onInput: (value: string) => {
         if (value === '') {
           store.dispatch(setSearchUsers([]));
@@ -129,7 +134,7 @@ class Chat extends Block {
       },
     });
 
-    const MoreBtn = new Button({
+    this.children.MoreBtn = new Button({
       icon: more,
       attr: {
         type: 'button',
@@ -138,7 +143,7 @@ class Chat extends Block {
       onClick: () => store.dispatch(setShowUserAffect(true)),
     });
 
-    const GoProfileBtn = new Button({
+    this.children.GoProfileBtn = new Button({
       text: 'Профиль',
       attr: {
         type: 'button',
@@ -147,20 +152,6 @@ class Chat extends Block {
       onClick: () => {
         router.go('/settings');
       },
-    });
-
-    super('div', {
-      ...props,
-      CreateNewChatBtn,
-      NewChatInput,
-      ChatsCard,
-      Send,
-      SearchChat,
-      UserAffectList,
-      Popup,
-      PopupChat,
-      MoreBtn,
-      GoProfileBtn,
     });
   }
 
@@ -222,8 +213,19 @@ class Chat extends Block {
   }
 }
 
-function mapUserToProps(state: TStore) {
-  return state;
-}
+const withStore = connect((state) => ({
+  user: state.user,
+  chatUsers: state.chatUsers,
+  chats: state.chats,
+  messages: state.messages,
+  socket: state.socket,
+  chatId: state.chatId,
+  token: state.token,
+  searchUsers: state.searchUsers,
+  showUserAffect: state.showUserAffect,
+  showSearchUser: state.showSearchUser,
+}));
 
-export default connect(Chat, mapUserToProps);
+const Chat = withStore(ChatPage);
+
+export default Chat;

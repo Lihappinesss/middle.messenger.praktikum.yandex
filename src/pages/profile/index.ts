@@ -11,13 +11,40 @@ import validateForm from '../../utils/validateForm';
 import connect from '../../hoc/connect';
 
 import template from './template';
-import { TStore } from '../../store/types';
 import router from '../../modules/Router';
 
-class Profile extends Block {
+class ProfilePage extends Block {
   constructor(tag: string, props: TProps) {
-    const { user = {} } = props || {};
+    super('div', {
+      ...props,
+    });
+  }
+
+  async init() {
+    authController.fetchUser();
+    const { user = {} } = this.props || {};
     const nameProfile = user?.first_name;
+    this.props.nameProfile = nameProfile;
+
+    this.children.Email = new Input({
+      type: 'email',
+      placeholder: 'Почта',
+      name: 'email',
+      onValidate:
+        (
+          element: HTMLInputElement | null,
+        ) => validateForm(element.value, element.name, element),
+    });
+
+    this.children.Login = new Input({
+      type: 'text',
+      placeholder: 'Логин',
+      name: 'login',
+      onValidate:
+        (
+          element: HTMLInputElement | null,
+        ) => validateForm(element.value, element.name, element),
+    });
 
     const handleSubmit = (e: MouseEvent) => {
       e.preventDefault();
@@ -30,62 +57,37 @@ class Profile extends Block {
       userController.updateProfile(formData);
     };
 
-    const Email = new Input({
-      type: 'email',
-      placeholder: 'Почта',
-      name: 'email',
-      value: user?.email,
-      onValidate:
-        (
-          element: HTMLInputElement | null,
-        ) => validateForm(element.value, element.name, element),
-    });
-
-    const Login = new Input({
-      type: 'text',
-      placeholder: 'Логин',
-      name: 'login',
-      value: user?.login,
-      onValidate:
-        (
-          element: HTMLInputElement | null,
-        ) => validateForm(element.value, element.name, element),
-    });
-
-    const Name = new Input({
+    this.children.Name = new Input({
       type: 'text',
       placeholder: 'Имя',
       name: 'first_name',
-      value: user?.first_name,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const Sername = new Input({
+    this.children.Sername = new Input({
       type: 'text',
       placeholder: 'Фамилия',
       name: 'second_name',
-      value: user?.second_name,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const Tel = new Input({
+    this.children.Tel = new Input({
       type: 'tel',
       placeholder: 'Телефон',
       name: 'phone',
-      value: user?.phone,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const Pass = new Input({
+    this.children.Pass = new Input({
       type: 'password',
       placeholder: 'Пароль',
       name: 'password',
@@ -95,19 +97,18 @@ class Profile extends Block {
         ) => validateForm(element.value, element.name, element),
     });
 
-    const DisplayName = new Input({
+    this.children.DisplayName = new Input({
       type: 'text',
       placeholder: 'Имя в чате',
       name: 'display_name',
-      value: user?.display_name,
       onValidate:
         (
           element: HTMLInputElement | null,
         ) => validateForm(element.value, element.name, element),
     });
 
-    const Ava = new Avatar({
-      ...props,
+    this.children.Ava = new Avatar({
+      ...this.props,
       onInput: (file: File) => {
         const formData = new FormData();
         formData.append('avatar', file);
@@ -115,7 +116,7 @@ class Profile extends Block {
       },
     });
 
-    const ChangeData = new Button({
+    this.children.ChangeData = new Button({
       attr: {
         type: 'submit',
       },
@@ -123,7 +124,7 @@ class Profile extends Block {
       onClick: (event) => handleSubmit(event),
     });
 
-    const Exit = new Button({
+    this.children.Exit = new Button({
       attr: {
         type: 'button',
       },
@@ -133,7 +134,7 @@ class Profile extends Block {
       },
     });
 
-    const GoChatBtn = new Button({
+    this.children.GoChatBtn = new Button({
       attr: {
         type: 'button',
       },
@@ -141,22 +142,6 @@ class Profile extends Block {
       onClick: () => {
         router.go('/messenger');
       },
-    });
-
-    super('div', {
-      ...props,
-      ChangeData,
-      Login,
-      Pass,
-      Email,
-      Name,
-      Sername,
-      Tel,
-      Ava,
-      nameProfile,
-      Exit,
-      DisplayName,
-      GoChatBtn,
     });
   }
 
@@ -167,10 +152,8 @@ class Profile extends Block {
   }
 }
 
-function mapUserToProps(state: TStore) {
-  return {
-    user: state.user,
-  };
-}
+const withUser = connect((state) => ({ user: state.user }));
 
-export default connect(Profile, mapUserToProps);
+const Profile = withUser(ProfilePage);
+
+export default Profile;

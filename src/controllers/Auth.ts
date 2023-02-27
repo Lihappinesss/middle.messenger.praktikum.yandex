@@ -3,7 +3,7 @@ import AuthApi from '../modules/Api/AuthApi';
 import { SigninData, SignupData } from '../modules/Api/types';
 
 import store from '../store';
-import { getUser, deleteUser } from '../store/actions';
+import { setUser, deleteUser } from '../store/actions';
 
 import router from '../modules/Router';
 
@@ -18,7 +18,7 @@ class AuthController {
     try {
       await this.api.checkAuth()
         .then((data) => {
-          store.dispatch(getUser(data));
+          store.dispatch(setUser(data));
         });
     } catch (e) {
       console.log(e);
@@ -29,7 +29,7 @@ class AuthController {
     try {
       await this.api.signUp(user)
         .then(() => {
-          router.go('/messenger');
+          router.go('/settings');
         });
     } catch (e) {
       console.log(e);
@@ -40,7 +40,7 @@ class AuthController {
     try {
       await this.api.signIn(user)
         .then(() => {
-          router.go('/messenger');
+          router.go('/settings');
         });
     } catch (e) {
       console.log(e);

@@ -17,6 +17,15 @@ const template = `
         <div>Имя в чате</div>
         <div>Пароль</div>
       </div>
+      <div class=${styles.left}>
+        <div>{{ user.email }}</div>
+        <div>{{ user.login }}</div>
+        <div>{{ user.first_name }}</div>
+        <div>{{ user.second_name }}</div>
+        <div>{{ user.phone }}</div>
+        <div>{{ user.display_name }}</div>
+        <div>{{ user.password }}</div>
+      </div>
       <form>
         {{{Email}}}
         {{{Login}}}

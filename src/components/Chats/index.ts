@@ -6,13 +6,12 @@ import getDate from '../../utils/getDate';
 import connect from '../../hoc/connect';
 
 import styles from './index.module.sass';
-import { TStore } from '../../store/types';
 
 Handlebars.registerHelper('getDate', (date) => {
   return getDate(date);
 });
 
-class Chats extends Block {
+class ChatsCard extends Block {
   constructor(tag: string, props: TProps) {
     super(tag, {
       ...props,
@@ -31,7 +30,6 @@ class Chats extends Block {
   }
 
   render(): DocumentFragment {
-    console.log(this.props.chats);
     return this.compile(
       `
         {{#each chats}}
@@ -54,10 +52,8 @@ class Chats extends Block {
   }
 }
 
-function mapUserToProps(state: TStore) {
-  return {
-    chats: state.chats,
-  };
-}
+const withChats = connect((state) => ({ chats: state.chats }));
 
-export default connect(Chats, mapUserToProps);
+const Chats = withChats(ChatsCard);
+
+export default Chats;

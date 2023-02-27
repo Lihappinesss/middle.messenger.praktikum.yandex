@@ -3,9 +3,8 @@ import Block, { TProps } from '../../modules/Block';
 import connect from '../../hoc/connect';
 
 import styles from './index.module.sass';
-import { TStore } from '../../store/types';
 
-class UserList extends Block {
+class UserListComponent extends Block {
   constructor(tag: string, props: TProps) {
     super(tag, {
       ...props,
@@ -37,10 +36,10 @@ class UserList extends Block {
   }
 }
 
-function mapUserToProps(state: TStore) {
-  return {
-    searchUsers: state.searchUsers,
-  };
-}
+const withStore = connect((state) => ({
+  searchUsers: state.searchUsers,
+}));
 
-export default connect(UserList, mapUserToProps);
+const UserList = withStore(UserListComponent);
+
+export default UserList;

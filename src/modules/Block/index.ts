@@ -25,8 +25,6 @@ abstract class Block <Props extends Record<string, any> = unknown> {
 
   protected readonly props: TProps;
 
-  protected state: any = {};
-
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -42,10 +40,8 @@ abstract class Block <Props extends Record<string, any> = unknown> {
     this.children = this._makePropsProxy(children);
     this._eventBus = () => eventBus;
     this._id = uuid();
-    this.getStateFromProps(props);
 
     this.props = this._makePropsProxy({ ...props, __id: this._id });
-    this.state = this._makePropsProxy(this.state);
 
     this._meta = {
       tagName,
@@ -57,7 +53,7 @@ abstract class Block <Props extends Record<string, any> = unknown> {
   }
 
   private _registerEvents(eventBus: EventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
@@ -68,23 +64,13 @@ abstract class Block <Props extends Record<string, any> = unknown> {
     this._element = this._createDocumentElement(tagName);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getStateFromProps(props: any): void {
-    this.state = {};
-  }
-
-  setState = (nextState: any) => {
-    if (!nextState) {
-      return;
-    }
-
-    Object.assign(this.state, nextState);
-  };
-
-  init() {
+  _init() {
+    this.init();
     this._createResources();
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
   }
+
+  init() {}
 
   private _componentDidMount(props) {
     this.componentDidMount(props);
