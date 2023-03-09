@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --mode=production --node-env=production",
     "dev": "webpack serve",
-    "start": "webpack && node ./server/server.js",
+    "start": "webpack && node ./server.js",
     "watch": "webpack --watch",
     "serve": "webpack serve",
     "test": "jest"
