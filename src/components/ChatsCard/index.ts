@@ -5,6 +5,8 @@ import Block, { TProps } from '../../modules/Block';
 import getDate from '../../utils/getDate';
 import connect from '../../hoc/connect';
 
+import defaultAvatar from '../../images/avatar.jpg';
+
 import styles from './index.module.sass';
 
 Handlebars.registerHelper('getDate', (date) => {
@@ -30,12 +32,19 @@ class ChatsCard extends Block {
   }
 
   render(): DocumentFragment {
+    Handlebars.registerHelper('getImage', (avatar: string) => {
+      const chatAvatar = avatar
+        ? `https://ya-praktikum.tech/api/v2/resources/${avatar}`
+        : defaultAvatar;
+      return chatAvatar;
+    });
+
     return this.compile(
       `
         {{#each chats}}
           <li data-chatid={{id}}>
             <div class=${styles.contact}>
-              <img class=${styles.avatar} src='https://ya-praktikum.tech/api/v2/resources/{{avatar}}' />
+              <img class=${styles.avatar} src={{getImage avatar}}>
               <div class=${styles.userInfo}>
                 <div class=${styles.title}>{{title}}</div>
                 <div class=${styles.lastMessage}>{{last_message.content}}</div>

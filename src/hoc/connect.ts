@@ -1,13 +1,14 @@
-import Block from '../modules/Block';
+import Block, { TProps } from '../modules/Block';
 
 import store from '../store';
+import { TStore } from '../store/types';
 
-export default function connect(mapStateToProps: (state: any) => any) {
+export default function connect(mapStateToProps: (state: TStore) => TStore) {
   return function wrap(Component: typeof Block) {
-    let previousState: any;
+    let previousState: TStore;
 
     return class WithStore extends Component {
-      constructor(tag, props: any) {
+      constructor(tag: string, props: TProps) {
         previousState = mapStateToProps(store.getState());
 
         super(tag, { ...props, ...previousState });

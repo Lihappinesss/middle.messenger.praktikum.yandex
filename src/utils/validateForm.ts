@@ -27,11 +27,11 @@ const phoneValid = (phone: string) => {
   return re.test(phone);
 };
 
-const showError = (input?: HTMLElement, message?: string):void => {
+const showError = (input: HTMLElement, message: string):void => {
   if (!input && !message) return;
-  const formWrapper = input.parentElement;
+  const formWrapper = input.parentElement as HTMLElement;
 
-  const error = formWrapper.querySelector('.error');
+  const error = formWrapper.querySelector('.error') as HTMLElement;
   error.textContent = message;
 };
 
@@ -39,12 +39,12 @@ const showSuccess = (input: HTMLElement) => {
   if (input) {
     const formWrapper = input.parentElement;
 
-    const error = formWrapper.querySelector('.error');
+    const error = formWrapper?.querySelector('.error') as HTMLElement;
     error.textContent = '';
   }
 };
 
-const validateEmail = (email: string, elem?: HTMLElement): boolean => {
+const validateEmail = (email: string, elem: HTMLElement): boolean => {
   let valid = false;
   if (!isRequired(email) && elem) {
     showError(elem, 'Введите email');
@@ -57,7 +57,7 @@ const validateEmail = (email: string, elem?: HTMLElement): boolean => {
   return valid;
 };
 
-const validatePassword = (password: string, elem?: HTMLElement) => {
+const validatePassword = (password: string, elem: HTMLElement) => {
   let valid = false;
   if (!isRequired(password) && elem) {
     showError(elem, 'Введите пароль');
@@ -70,7 +70,7 @@ const validatePassword = (password: string, elem?: HTMLElement) => {
   return valid;
 };
 
-const validateLogin = (login: string, elem?: HTMLElement): boolean => {
+const validateLogin = (login: string, elem: HTMLElement): boolean => {
   let valid = false;
   if (!isRequired(login) && elem) {
     showError(elem, 'Введите логин');
@@ -83,7 +83,7 @@ const validateLogin = (login: string, elem?: HTMLElement): boolean => {
   return valid;
 };
 
-const validateName = (name: string, elem?: HTMLElement): boolean => {
+const validateName = (name: string, elem: HTMLElement): boolean => {
   let valid = false;
   if (!isRequired(name) && elem) {
     showError(elem, 'Введите имя');
@@ -96,7 +96,7 @@ const validateName = (name: string, elem?: HTMLElement): boolean => {
   return valid;
 };
 
-const validatePhone = (phone: string, elem?: HTMLElement) => {
+const validatePhone = (phone: string, elem: HTMLElement) => {
   let valid = false;
   if (!isRequired(phone) && elem) {
     showError(elem, 'Формат: +7(999)999-99-99');
@@ -109,7 +109,7 @@ const validatePhone = (phone: string, elem?: HTMLElement) => {
   return valid;
 };
 
-const validateMessage = (message: string, elem?: HTMLElement) => {
+const validateMessage = (message: string, elem: HTMLElement) => {
   let valid = false;
   if (!isRequired(message) && elem) {
     showError(elem, 'Пустое сообщение');
@@ -120,10 +120,11 @@ const validateMessage = (message: string, elem?: HTMLElement) => {
   return valid;
 };
 
-const validateForm = (value: string, name: string, elem?: HTMLElement) => {
-  let isValid = true;
-  if (name === 'email') {
-    isValid = validateEmail(value, elem);
+const validateForm = (value: string, name: string, elem: HTMLInputElement | undefined): boolean => {
+  let isValid = false;
+
+  if (!elem) {
+    return isValid;
   }
   switch (name) {
     case 'email':

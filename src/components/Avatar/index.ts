@@ -4,6 +4,8 @@ import Input from '../Input';
 
 import styles from './index.module.sass';
 
+import avatar from '../../images/avatar.jpg';
+
 class Avatar extends Block {
   constructor(props: TProps) {
     const InputAvatar = new Input({
@@ -25,14 +27,10 @@ class Avatar extends Block {
     });
   }
 
-  getStateFromProps(props) {
-    this.state = {
-      ...props,
-    };
-  }
-
   render() {
-    const path = `https://ya-praktikum.tech/api/v2/resources/${this.props.user?.avatar}`;
+    const path = this.props.user.avatar
+    ? `https://ya-praktikum.tech/api/v2/resources/${this.props.user?.avatar}`
+    : avatar;
 
     return this.compile(`
       <div class=${styles.avatar}>

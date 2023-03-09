@@ -42,16 +42,16 @@ type messages = {
 }
 
 export type TStore = {
-  user: User | null,
-  chatUsers: User[] | [],
-  chats: Chats[] | [],
-  messages: messages[] | [],
-  socket: string | null,
-  chatId: number | null,
-  token: string,
-  searchUsers: User[] | [],
-  showUserAffect: boolean,
-  showSearchUser: boolean,
+  user?: User | null,
+  chatUsers?: User[] | [],
+  chats?: Chats[] | [],
+  messages?: messages[] | [],
+  socket?: string | null,
+  chatId?: number | null,
+  token?: string,
+  searchUsers?: User[] | [],
+  showUserAffect?: boolean,
+  showSearchUser?: boolean,
 }
 
 export type Indexed = {[key: string]: any};
