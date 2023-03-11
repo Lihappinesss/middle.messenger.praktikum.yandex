@@ -10,7 +10,8 @@
     "watch": "webpack --watch",
     "serve": "webpack serve",
     "test": "jest",
-    "lint": "eslint \"**/*.{ts,tsx}\""
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "stylelint": "stylelint **/*.sass"
   },
   "husky": {
     "hooks": {
