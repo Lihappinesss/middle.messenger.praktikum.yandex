@@ -1,11 +1,20 @@
 {
-  "plugins": [
-    "stylelint-scss"
+  "extends": [
+    "stylelint-config-sass-guidelines"
   ],
+
   "rules": {
-    "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true,
-    "scss/dollar-variable-pattern": "^foo",
-    "scss/selector-no-redundant-nesting-selector": true
-  }
-} 
+    "color-hex-case": "lower",
+    "string-quotes": "single",
+    "import-notation": null,
+    "indentation": null,
+    "scss/selector-no-redundant-nesting-selector": null,
+    "scss/at-mixin-pattern": null
+  },
+  "ignoreFiles": [
+    "dist/*",
+    "node_modules/*",
+    ".parcel-cache/*",
+    "src/index.sass"
+  ]
+}

@@ -1,4 +1,4 @@
-import Block from '../../modules/Block';
+import Block, { TProps } from '../../modules/Block';
 
 import authController from '../../controllers/Auth';
 
@@ -8,18 +8,22 @@ import Input from '../../components/Input';
 import template from './template';
 import router from '../../modules/Router';
 
+// Todo вывести ошибку, если неверный пароль или логин
 class Signin extends Block {
-  constructor(tag, props: Record<string, any> = {}) {
+  constructor(tag: string, props: TProps) {
     const handleSign = (e: MouseEvent) => {
       e.preventDefault();
-      const data = {
-        email: '',
-        password: '',
-      };
-      document.querySelectorAll('input').forEach((elem) => {
-        data[elem.name] = elem.value;
-      });
-      authController.signIn(data);
+
+      const inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll('input');
+
+      const inputsArray = Array.from(inputs) as HTMLInputElement[];
+
+      const formData = inputsArray.reduce((acc: any, field: HTMLInputElement) => {
+        acc[field.name] = field.value;
+        return acc;
+      }, {});
+
+      authController.signIn(formData);
     };
 
     const Login = new Input({

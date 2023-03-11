@@ -11,7 +11,7 @@ class UserController {
     this.api = new UserApi();
   }
 
-  async search(data) {
+  async search(data: string) {
     try {
       await this.api.search(data)
         .then((users) => store.dispatch(setSearchUsers(users)));

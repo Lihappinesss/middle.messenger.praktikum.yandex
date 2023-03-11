@@ -23,8 +23,7 @@ class UserApi extends BaseAPI {
 
   public updateAvatar(data: FormData) {
     return this.put('/profile/avatar', {
-      headers: {
-      },
+      headers: {},
       data,
     });
   }

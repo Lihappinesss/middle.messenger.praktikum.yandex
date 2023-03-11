@@ -1,4 +1,4 @@
-import Block from '../../modules/Block';
+import Block, { TProps } from '../../modules/Block';
 
 import chatController from '../../controllers/ChatController';
 import messageController from '../../controllers/MessageController';
@@ -18,7 +18,7 @@ import {
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import Chats from '../../components/Chats';
+import Chats from '../../components/ChatsCard';
 import MessageSend from '../../components/MessageSend';
 import UserAffect from '../../components/UserAffectList';
 import Popup from '../../components/Popup';
@@ -28,7 +28,7 @@ import template from './template';
 import more from '../../images/more.svg';
 
 class ChatPage extends Block {
-  constructor(tag: string, props: Record<string, any> = {}) {
+  constructor(tag: string, props: TProps) {
     super('div', {
       ...props,
     });
@@ -118,7 +118,7 @@ class ChatPage extends Block {
         }
       },
       onClick: (userId: number) => {
-        const users = [];
+        const users: number[] = [];
         users.push(userId);
         const data = {
           users,
@@ -187,9 +187,9 @@ class ChatPage extends Block {
   handleSend(e: Event) {
     e.preventDefault();
 
-    const form = (e.target as HTMLElement).closest('form');
+    const form = (e.target as HTMLFormElement).closest('form') as HTMLFormElement;
 
-    const fields = Array.from(form).filter((el) => el.nodeName === 'INPUT');
+    const fields = Array.from(form).filter((el: HTMLElement) => el.nodeName === 'INPUT');
     const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
       acc[field.name] = field.value;
       return acc;

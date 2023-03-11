@@ -32,7 +32,7 @@ class ProfilePage extends Block {
       name: 'email',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -42,7 +42,7 @@ class ProfilePage extends Block {
       name: 'login',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -63,7 +63,7 @@ class ProfilePage extends Block {
       name: 'first_name',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -73,7 +73,7 @@ class ProfilePage extends Block {
       name: 'second_name',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -83,7 +83,7 @@ class ProfilePage extends Block {
       name: 'phone',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -93,7 +93,7 @@ class ProfilePage extends Block {
       name: 'password',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -103,7 +103,7 @@ class ProfilePage extends Block {
       name: 'display_name',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 

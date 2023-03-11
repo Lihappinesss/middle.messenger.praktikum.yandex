@@ -1,5 +1,3 @@
-import { User } from '../../store/types';
-
 export interface SigninData{
   email: string;
   password: string;
@@ -20,7 +18,7 @@ export interface ChatTitle {
 
 export interface NewUser {
   chatId: number,
-  users: User[]
+  users: number[]
 }
 
 export interface ChatId {

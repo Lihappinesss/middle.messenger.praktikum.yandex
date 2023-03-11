@@ -1,3 +1,5 @@
+import { User } from './types';
+
 export const GET_USER = 'getUser';
 export const SET_USER = 'setUser';
 export const DELETE_USER = 'deleteUser';
@@ -17,7 +19,7 @@ export const SET_SHOW_USER_AFFECT = 'setShowUserAffect';
 export const SET_SHOW_SEARCH_USER = 'setShowSearchUser';
 
 // User actions
-export const setUser = (user: any) => ({
+export const setUser = (user: User) => ({
   type: SET_USER,
   payload: user,
 });
@@ -31,7 +33,7 @@ export const setError = (error: { reason: string }) => ({
   payload: error,
 });
 
-export const getUser = (user) => ({
+export const getUser = (user: User) => ({
   type: GET_USER,
   payload: user,
 });
@@ -42,7 +44,7 @@ export const addChat = (id: number) => ({
   payload: id,
 });
 
-export const setChats = (chats) => ({
+export const setChats = (chats: any) => ({
   type: SET_CHATS,
   payload: chats,
 });
@@ -52,7 +54,7 @@ export const setToken = (id: string) => ({
   payload: id,
 });
 
-export const setMessages = (messages) => ({
+export const setMessages = (messages: any) => ({
   type: SET_MESSAGES,
   payload: messages,
 });
@@ -68,12 +70,12 @@ export const addUser = (userId: number) => ({
   payload: userId,
 });
 
-export const setSearchUsers = (users) => ({
+export const setSearchUsers = (users: User | []) => ({
   type: SET_SEARCH_USERS,
   payload: users,
 });
 
-export const setChatUsers = (users) => ({
+export const setChatUsers = (users: User) => ({
   type: SET_CHAT_USERS,
   payload: users,
 });
