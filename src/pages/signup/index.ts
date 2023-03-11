@@ -1,4 +1,4 @@
-import Block from '../../modules/Block';
+import Block, { TProps } from '../../modules/Block';
 
 import authController from '../../controllers/Auth';
 
@@ -11,21 +11,28 @@ import template from './template';
 import router from '../../modules/Router';
 
 class SignUp extends Block {
-  constructor(tag, props: Record<string, any> = {}) {
+  constructor(tag: string, props: TProps) {
     const handleSubmit = (e: MouseEvent) => {
       e.preventDefault();
-      const inputs = document.querySelectorAll('input');
-      const formData = Array.from(inputs).reduce((acc: any, field: HTMLInputElement) => {
+      const inputs: NodeListOf<HTMLInputElement> = document.querySelectorAll('input');
+
+      const inputsArray = Array.from(inputs) as HTMLInputElement[];
+
+      const formData = inputsArray.reduce((acc: any, field: HTMLInputElement) => {
         acc[field.name] = field.value;
         return acc;
       }, {});
 
-      const isEmailValid = validateForm(formData.email, 'email');
-      const isPasswordValid = validateForm(formData.password, 'password');
-      const isLoginValid = validateForm(formData.login, 'login');
-      const isFirstValid = validateForm(formData.first_name, 'first_name');
-      const isSecondValid = validateForm(formData.second_name, 'second_name');
-      const isPhoneValid = validateForm(formData.phone, 'phone');
+      const findElem = (name: string) => {
+        return inputsArray.find((elem) => elem.name === name);
+      };
+
+      const isEmailValid = validateForm(formData.email, 'email', findElem('email'));
+      const isPasswordValid = validateForm(formData.password, 'password', findElem('password'));
+      const isLoginValid = validateForm(formData.login, 'login', findElem('login'));
+      const isFirstValid = validateForm(formData.first_name, 'first_name', findElem('first_name'));
+      const isSecondValid = validateForm(formData.second_name, 'second_name', findElem('second_name'));
+      const isPhoneValid = validateForm(formData.phone, 'phone', findElem('phone'));
 
       const isValidField = isEmailValid
         && isPasswordValid
@@ -37,6 +44,7 @@ class SignUp extends Block {
       if (isValidField) {
         authController.signUp(formData);
       }
+      authController.signUp(formData);
     };
 
     const Email = new Input({
@@ -45,7 +53,7 @@ class SignUp extends Block {
       name: 'email',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -55,7 +63,7 @@ class SignUp extends Block {
       name: 'login',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -65,7 +73,7 @@ class SignUp extends Block {
       name: 'first_name',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -75,7 +83,7 @@ class SignUp extends Block {
       name: 'second_name',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -85,7 +93,7 @@ class SignUp extends Block {
       name: 'phone',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 
@@ -95,7 +103,7 @@ class SignUp extends Block {
       name: 'password',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 

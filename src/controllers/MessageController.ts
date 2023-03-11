@@ -4,8 +4,12 @@ import { setMessages } from '../store/actions';
 type Options = {
   token: string,
   userId: number,
-  chatId: number
+  chatId: number,
 };
+
+export interface IMessageWebSocketGet {
+  offset: number
+}
 
 const BASE_URL = 'wss://ya-praktikum.tech/ws';
 
@@ -100,7 +104,7 @@ class MessageController {
     this._addEvents();
   }
 
-  public getMessages(options) {
+  public getMessages(options: IMessageWebSocketGet) {
     this._ws.send(JSON.stringify({
       content: options.offset.toString(),
       type: 'get old',

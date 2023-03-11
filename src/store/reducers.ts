@@ -15,12 +15,7 @@ import {
   SET_SHOW_SEARCH_USER,
 } from './actions';
 
-type Indexed = {[key: string]: any};
-
-export interface Action {
-  type: string;
-  payload?: any;
-}
+import { Indexed, Action } from './types';
 
 export default (state: Indexed, action: Action) => {
   switch (action.type) {

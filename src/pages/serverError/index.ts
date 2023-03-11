@@ -1,9 +1,9 @@
-import Block from '../../modules/Block';
+import Block, { TProps } from '../../modules/Block';
 
 import Error from '../../components/Error';
 
 class ServerError extends Block {
-  constructor(props: Record<string, any> = {}) {
+  constructor(tag: string, props: TProps) {
     const error = new Error({
       err: '500',
       text: 'Мы уже фиксим',

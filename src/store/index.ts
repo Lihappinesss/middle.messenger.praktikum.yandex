@@ -4,6 +4,7 @@ import reducers from './reducers';
 import {
   Indexed,
   TStore,
+  Action,
 } from './types';
 
 export const defaultState = {
@@ -40,7 +41,7 @@ class Store extends EventBus {
     return this.state;
   }
 
-  public dispatch(action) {
+  public dispatch(action: Action) {
     this.state = reducers(this.state, action);
 
     this.emit('changed', this.getState());

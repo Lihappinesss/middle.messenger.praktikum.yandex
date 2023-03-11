@@ -16,7 +16,7 @@ class MessageSend extends Block {
       styleType: 'secondary',
       onValidate:
         (
-          element: HTMLInputElement | null,
+          element: HTMLInputElement,
         ) => validateForm(element.value, element.name, element),
     });
 

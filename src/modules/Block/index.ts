@@ -7,7 +7,7 @@ import debounce from '../../utils/debounce';
 
 export type TProps = Record<string, any>;
 
-abstract class Block <Props extends Record<string, any> = unknown> {
+class Block {
   private _meta: {
     tagName: string,
     props: TProps
@@ -32,7 +32,7 @@ abstract class Block <Props extends Record<string, any> = unknown> {
     FLOW_RENDER: 'flow:render',
   };
 
-  constructor(tagName: string, propsAndChildren: Props) {
+  constructor(tagName: string, propsAndChildren: TProps) {
     const { children, props } = this._getChildren(propsAndChildren);
 
     const eventBus = new EventBus();
@@ -72,7 +72,7 @@ abstract class Block <Props extends Record<string, any> = unknown> {
 
   init() {}
 
-  private _componentDidMount(props) {
+  private _componentDidMount(props: TProps) {
     this.componentDidMount(props);
 
     Object.values(this.children).forEach((child) => {
@@ -81,7 +81,7 @@ abstract class Block <Props extends Record<string, any> = unknown> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidMount(props) {
+  componentDidMount(props: TProps) {
   }
 
   compile(layout: string, props?: TProps) {
@@ -189,14 +189,14 @@ abstract class Block <Props extends Record<string, any> = unknown> {
     }
   }
 
-  private _makePropsProxy(props) {
+  private _makePropsProxy(props: TProps) {
     return new Proxy(props, {
       get(target: TProps, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
 
-      set: (target, prop, value) => {
+      set: (target: TProps, prop:string, value: unknown) => {
         if (target[prop] !== value) {
           target[prop] = value;
           this._setUpdate = true;

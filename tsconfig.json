@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "module": "esnext",
     "target": "es2018",
     "declaration": false,
     "esModuleInterop": true,
@@ -9,15 +14,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "noUnusedParameters": true,
-  },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "include": [
-    "src",
-    "index.d.ts"
-  ],
-  "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "noUnusedParameters": false,
+  }
 }

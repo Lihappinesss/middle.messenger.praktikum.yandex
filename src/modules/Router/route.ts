@@ -7,7 +7,7 @@ class Route {
 
   private _blockClass: typeof Block;
 
-  private _block: null | Block;
+  private _block: Block | null;
 
   private _props: TProps;
 
@@ -37,7 +37,7 @@ class Route {
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass();
+      this._block = new this._blockClass('div', this._props);
       const root = document.querySelector(this._props.rootQuery);
       if (!root) {
         throw new Error('Root not found');
