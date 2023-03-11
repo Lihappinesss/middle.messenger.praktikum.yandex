@@ -1,6 +1,6 @@
 import HTTPTransport from '.';
 
-describe('Http testing', () => {  
+describe('Http testing', () => {
   const http = new HTTPTransport('/user');
 
   it('check http', () => {

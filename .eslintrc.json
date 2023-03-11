@@ -45,7 +45,7 @@
     "@typescript-eslint/no-unused-vars": "error",
     "no-constructor-return": "off",
     "no-use-before-define": "off",
-    "max-classes-per-file": false    
+    "max-classes-per-file": ["error", 3]
   },
   "settings": {
     "import/extensions": [".ts"],

@@ -9,23 +9,22 @@ describe('Block methods', () => {
     text: 'Сохранить',
   });
 
-  document.body.innerHTML = '<div id="btn"></div>'
+  document.body.innerHTML = '<div id="btn"></div>';
   render('#btn', button);
 
   test('render', () => {
-    const component = button.getContent()
-    expect(component.textContent).toBe('Сохранить')
-  })
-
+    const component = button.getContent();
+    expect(component.textContent).toBe('Сохранить');
+  });
 
   test('testing componentDidUpdate', () => {
-    const newText = 'Component did updated'
-    button.setProps({ text: newText })
+    const newText = 'Component did updated';
+    button.setProps({ text: newText });
 
-    const changedComponent = button.getContent()
+    const changedComponent = button.getContent();
 
-    expect(changedComponent.textContent).toBe(newText)
-  })
+    expect(changedComponent.textContent).toBe(newText);
+  });
 });
 
 describe('Testing events', () => {
@@ -35,15 +34,15 @@ describe('Testing events', () => {
       type: 'submit',
     },
     text: 'Сохранить',
-    onClick: (e) => {
-     count++;
+    onClick: () => {
+      count += 1;
     },
   });
 
   test('handle click', () => {
-    const btn = button.getContent()
-    btn.click()
-    btn.click()
-    expect(count).toBe(2)
-  })
-})
+    const btn = button.getContent();
+    btn.click();
+    btn.click();
+    expect(count).toBe(2);
+  });
+});

@@ -13,14 +13,13 @@ describe('Router testing', () => {
     .use('/chat', Chat)
     .start();
 
-
   it('change path', () => {
     router.go('/chat');
-    expect(router.history.length).toBe(2)
+    expect(router.history.length).toBe(2);
   });
 
   it('change path', () => {
     router.go('/chat');
-    expect(window.location.pathname).toBe('/chat')
+    expect(window.location.pathname).toBe('/chat');
   });
 });
